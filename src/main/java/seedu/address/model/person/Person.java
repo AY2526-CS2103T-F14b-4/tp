@@ -1,12 +1,11 @@
 package seedu.address.model.person;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
@@ -23,6 +22,7 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Country country;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
@@ -34,6 +34,17 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.country = null;
+        this.tags.addAll(tags);
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Country country, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.country = country;
         this.tags.addAll(tags);
     }
 
@@ -51,6 +62,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Country getCountry() {
+        return country;
     }
 
     /**
@@ -94,13 +109,14 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && country.equals(otherPerson.country)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, country, tags);
     }
 
     @Override
@@ -110,6 +126,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("country", country)
                 .add("tags", tags)
                 .toString();
     }
